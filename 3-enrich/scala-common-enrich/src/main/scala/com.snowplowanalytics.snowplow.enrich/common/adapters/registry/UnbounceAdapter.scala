@@ -108,15 +108,17 @@ object UnbounceAdapter extends Adapter {
                     NonEmptyList(RawEvent(
                       api          = payload.api,
                       parameters   = toUnstructEventParams(TrackerVersion, qsParams, schema,
-                        ("data.json", parse(bodyMap.get("data.json").get)) ::
-                        event
-                          .filterField({case (name: String, _) => !(name == "data.xml" || name == "data.json")}),
+                        camelize(
+                          ("data.json", parse(bodyMap.get("data.json").get)) ::
+                          event
+                            .filterField({case (name: String, _) => !(name == "data.xml" || name == "data.json")})),
                           "srv"),
                       contentType  = payload.contentType,
                       source       = payload.source,
                       context      = payload.context
                     )).success
-              }}
+                }
+              }
               case Failure(str) => str.failNel
             }
           } catch {
