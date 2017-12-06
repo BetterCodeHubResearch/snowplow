@@ -118,7 +118,7 @@ def toRawEvents(payload: CollectorPayload)(implicit resolver: Resolver): Validat
                       api         = payload.api,
                       parameters  = toUnstructEventParams(TrackerVersion, params, schemaUri, cleanupJsonEventValues(
                         mutateMailgunEvent(event),
-                        ("event", eventType).some, "timestamp", _ * 1000), "srv"),
+                        ("event", eventType).some, "timestamp"), "srv"),
                       contentType = payload.contentType,
                       source      = payload.source,
                       context     = payload.context
